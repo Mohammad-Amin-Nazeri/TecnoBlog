@@ -1,0 +1,67 @@
+﻿@using Blog.CoreLayer.Utilities
+@using Blog.CoreLayer.Utlilties
+@model List<Blog.CoreLayer.DTOs.Posts.PostDto>
+<!-- Widget Popular Posts -->
+<style>
+    .entry__img-holder {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+        .entry__img-holder:hover {
+            transform: scale(1.1);
+        }
+
+    .thumb-text-holder {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .entry__img-holder:hover .thumb-text-holder {
+        opacity: 1;
+    }
+
+    .thumb-entry-title {
+        font-size: 15px;
+        font-weight: bold;
+        transition: font-size 0.3s ease;
+    }
+
+    .entry__img-holder:hover .thumb-entry-title {
+        font-size: 18px; /* افزایش اندازه متن */
+    }
+</style>
+
+@if (Model.Any())
+{
+    <section  class="section mb-0">
+        <div class="title-wrap title-wrap--line">
+            <h3 class="section-title">پربازدیدترین مقالات</h3>
+        </div>
+
+            @foreach (var item in Model)
+            {
+
+                <article  class="entry thumb thumb--size-1">
+                    <div class="entry__img-holder thumb__img-holder" style="background-image: url('@Directories.GetPostImage(item.ImageName)');">
+                        <div class="bottom-gradient"></div>
+                        <div class="thumb-text-holder">
+                            <h2 class="thumb-entry-title">
+                                <a asp-page="Post" asp-route-Slug="@item.Slug">@item.Title</a>
+                            </h2>
+                        </div>
+                        <a asp-page="Post" asp-route-Slug="@item.Slug" class="thumb-url"></a>
+                    </div>
+            </article>
+            }
+        
+
+
+    </section>
+}

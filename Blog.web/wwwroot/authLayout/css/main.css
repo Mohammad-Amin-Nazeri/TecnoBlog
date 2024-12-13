@@ -1,0 +1,138 @@
+﻿/* Reset CSS */
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 900;
+    src: url('../../fonts/IRANSans/eot/IRANSansWeb_Black.eot');
+    src: url('../../fonts/IRANSans/eot/IRANSansWeb_Black.eot?#iefix') format('embedded-opentype'), url('../../fonts/IRANSans/woff2/IRANSansWeb_Black.woff2') format('woff2'), url('../../fonts/IRANSans/woff/IRANSansWeb_Black.woff') format('woff'), url('../../fonts/IRANSans/ttf/IRANSansWeb_Black.ttf') format('truetype');
+}
+
+body {
+    background: #DCDDDF url(https://cssdeck.com/uploads/media/items/7/7AF2Qzt.png);
+    color: #000;
+    font: 14px IRANSans;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    text-align: right;
+}
+
+/* Container */
+.container {
+    margin: 25px auto;
+    position: relative;
+    width: 90%; /* عرض پویا */
+    max-width: 1200px; /* حداکثر عرض */
+}
+
+/* Content */
+#content {
+    background: #f9f9f9;
+    border: 1px solid #c4c6ca;
+    margin: 0 auto;
+    padding: 25px 15px;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    width: 100%; /* عرض پویا */
+    max-width: 500px; /* حداکثر عرض */
+    box-sizing: border-box; /* شامل padding و border */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* سایه اضافه شده */
+}
+
+    #content h1 {
+        color: #7E7E7E;
+        font: bold 25px IRANSans;
+        letter-spacing: -0.05em;
+        line-height: 1.5;
+        margin: 10px 0 30px;
+    }
+
+    /* Form Elements */
+    #content form input[type="text"],
+    #content form input[type="password"] {
+        border-radius: 5px;
+        border: 1px solid #c8c8c8;
+        color: #777;
+        font: 14px IRANSans;
+        margin: 0 0 15px;
+        padding: 15px 10px;
+        width: 100%; /* عرض کامل */
+        box-sizing: border-box; /* شامل padding */
+    }
+
+        #content form input[type="text"]:focus,
+        #content form input[type="password"]:focus {
+            border-color: #85592e;
+            outline: none;
+            box-shadow: 0 0 5px rgba(133, 89, 46, 0.5); /* رنگ حاشیه و سایه در فوکوس */
+        }
+
+    #content form input[type="submit"] {
+        border-radius: 30px;
+        border: 1px solid #D69E31;
+        color: #fff;
+        background: linear-gradient(to right, #85592e, #a57441); /* گرادیان دکمه */
+        cursor: pointer;
+        font: bold 15px IRANSans;
+        height: 40px;
+        margin: 20px auto;
+        width: 100%;
+        max-width: 250px; /* حداکثر عرض */
+        transition: background-color 0.3s ease;
+    }
+
+        #content form input[type="submit"]:hover {
+            background-color: #a57441;
+        }
+
+        #content form input[type="submit"]:active {
+            background-color: #704828; /* رنگ دکمه هنگام کلیک */
+        }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #content {
+        padding: 20px;
+        max-width: 90%; /* کاهش عرض برای موبایل */
+    }
+
+        #content h1 {
+            font-size: 20px;
+        }
+
+        #content form input[type="submit"] {
+            max-width: 100%; /* عرض کامل در موبایل */
+        }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 12px;
+    }
+
+    #content {
+        padding: 15px;
+    }
+
+        #content h1 {
+            font-size: 18px;
+            margin: 5px 0 20px;
+        }
+
+        #content form input[type="text"],
+        #content form input[type="password"] {
+            padding: 10px;
+        }
+
+        #content form input[type="submit"] {
+            height: 35px;
+        }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 70%;
+    }
+}

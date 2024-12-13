@@ -1,0 +1,14 @@
+﻿@model Blog.CoreLayer.DTOs.Users.EditUserDto
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<form asp-area="admin" asp-controller="User" asp-action="Edit" method="post">
+    @Html.HiddenFor(m=>m.UserId)
+    <div class="row">
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.FullName)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.Role)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Edit</button>
+</form>

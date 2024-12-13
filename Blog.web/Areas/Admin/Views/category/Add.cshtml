@@ -1,0 +1,63 @@
+﻿@model Blog.web.Areas.Admin.Models.Categories.CreateCategoryViewModel
+@{
+    ViewData["title"] = "افزودن دسته بندی ها ";
+    ViewData["Selected"] = "category";
+    var counter = 1;
+}
+<section class="content-header">
+    <h1>
+        @ViewData["title"]
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">دسته بندی ها</a></li>
+
+        <li class="active">@ViewData["title"]</li>
+    </ol>
+</section>
+
+<section class="content">
+
+    <form class="box box-danger" method="post" asp-area="Admin" asp-controller="Category" asp-action="Add">
+        <input type="hidden" asp-for="ParentId"/>
+        <div class="box-body row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Title" class="float-right">عنوان</label>
+                    <input asp-for="Title" class="form-control text-right" />
+                    <span asp-validation-for="Title"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Slug" class="float-right">Slug</label>
+                    <input asp-for="Slug" class="form-control text-right" />
+                    <span asp-validation-for="Slug"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="MetaTag" class="float-right">(با - از هم جدا کنید) MetaTag</label>
+                    <input asp-for="MetaTag" class="form-control text-right" />
+                    <span asp-validation-for="MetaTag"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="MetaDescription" class="float-right">MetaDescription</label>
+                    <textarea asp-for="MetaDescription" class="form-control text-right"></textarea>
+                    <span asp-validation-for="MetaDescription"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <button class="btn btn-success float-left" type="submit">ثبت اطلاعات</button>
+        </div>
+    </form>
+
+</section>

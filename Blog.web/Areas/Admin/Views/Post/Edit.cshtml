@@ -1,0 +1,136 @@
+﻿@using Blog.CoreLayer.Services.Categories
+@model Blog.web.Areas.Admin.Models.Posts.EditPostViewModel
+@inject Blog.CoreLayer.Services.Categories.ICategoryService _categoryService
+
+@{
+    ViewData["title"] = "ویرایش ‌‌مقاله";
+    ViewData["Selected"] = "Posts";
+    var categories = _categoryService.GetAllCategory();
+}
+
+<section class="content-header">
+    <h1>@ViewData["title"]</h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li><a asp-area="Admin" asp-controller="Post" asp-action="Index">مقالات</a></li>
+        <li class="active">@ViewData["title"]</li>
+    </ol>
+</section>
+
+<section class="content">
+    <form class="box box-danger" method="post" asp-area="Admin" asp-controller="Post" asp-action="Edit" enctype="multipart/form-data">
+        <div class="box-body row">
+
+            <!-- Title -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Title" class="float-right"></label>
+                    <input asp-for="Title" class="form-control text-right" />
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                </div>
+            </div>
+           
+            <!-- Slug -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Slug" class="float-right"></label>
+                    <input asp-for="Slug" class="form-control text-right" />
+                    <span class="text-danger" asp-validation-for="Slug"></span>
+                </div>
+            </div>
+            <!-- small -->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="SmallDescription" class="float-right"></label>
+                    <input asp-for="SmallDescription" class="form-control text-right" />
+                    <span class="text-danger" asp-validation-for="SmallDescription"></span>
+                </div>
+            </div>
+            <!-- Description -->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Description" class="float-right"></label>
+                    <textarea asp-for="Description" class="form-control" id="ckEditor4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="CategoryID" class="float-right"></label>
+                    <select asp-for="CategoryID" class="form-control">
+                        <option value="null">انتخاب کنید</option>
+                        @foreach (var item in categories.Where(c => c.ParentId == null))
+                        {
+                            <option value="@item.Id">@item.Title</option>
+                        }
+                    </select>
+                    <span class="text-danger" asp-validation-for="CategoryID"></span>
+                </div>
+            </div>
+
+            <!-- SubCategory -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="SubCategoryId" class="float-right"></label>
+                    <select asp-for="SubCategoryId" class="form-control">
+                        <option value="0">انتخاب کنید</option>
+                        @foreach (var item in categories.Where(c => c.ParentId == Model.CategoryID))
+                        {
+                            <option value="@item.Id">@item.Title</option>
+                        }
+                    </select>
+                    <span class="text-danger" asp-validation-for="SubCategoryId"></span>
+                </div>
+            </div>
+
+            <!-- Image File -->
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.EditorFor(m => m.ImageFile)
+                </div>
+            </div>
+
+            <!-- keyword -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Keyword" class="float-right"></label>
+                    <input asp-for="Keyword" class="form-control text-right" />
+                    <span class="text-danger" asp-validation-for="Keyword"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="IsSpecial" class="float-right"></label>
+                    <input asp-for="IsSpecial" type="checkbox" class="custom-control-input" />
+                    <span class="text-danger" asp-validation-for="IsSpecial"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-success float-left">ثبت اطلاعات</button>
+        </div>
+    </form>
+</section>
+
+@section scripts {
+    <script>
+        $("#CategoryID").change(function () {
+            var categoryId = $(this).val();
+            $.ajax({
+                url: "/admin/category/GetChildCategories?parentId=" + categoryId,
+                type: "get"
+            }).done(function (data) {
+                $("#SubCategoryId").html('<option value="0">انتخاب کنید</option>');
+                for (var i in data) {
+                    var category = data[i];
+                    $("#SubCategoryId").append(`<option value="${category.id}">${category.title}</option>`);
+                }
+            });
+        });
+    </script>
+}

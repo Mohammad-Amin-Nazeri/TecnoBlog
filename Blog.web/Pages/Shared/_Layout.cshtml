@@ -1,0 +1,116 @@
+﻿@inject Blog.CoreLayer.Services.Categories.ICategoryService _categoryServies;
+
+@{
+    var categories = _categoryServies.GetAllCategory();
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    <!-- اطلاعات پایه -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="language" content="fa">
+    <meta name="google-site-verification" content="lOupOtERMlyG6-8HfEvbbkL6-lbs_zQHGXyjxAbXwBo">
+
+    <!-- عنوان و توضیحات -->
+    <title>@ViewData["Title"]</title>
+    <meta name="title" content="@ViewData["Title"]">
+
+    <!-- شبکه‌های اجتماعی (Open Graph) -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fa_IR">
+
+    <!-- شبکه‌های اجتماعی (Twitter Cards) -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- داده‌های ساختارمند JSON-LD -->
+    <script type="application/ld+json">
+        {
+            "context": "https://schema.org",
+            "type": "WebSite",
+            "name": "@ViewData["Title"]",
+            "description": "@ViewData["Description"]",
+            "url": "@ViewData["Url"]",
+            "publisher": {
+                "type": "Organization",
+                "name": "تکنوبلاگ",
+                "logo": {
+                    "type": "ImageObject",
+                    "url": "/img/logo .png"
+                }
+            }
+        }
+    </script>
+
+    <!-- لینک‌ها -->
+    <link rel="shortcut icon" href="/img/logo .ico">
+    <link rel="apple-touch-icon" href="/img/logo .ico">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700%7CSource+Sans+Pro:400,600,700" rel="stylesheet">
+
+    <!-- یکتانت -->
+    <script>
+        !function (e, t, n) { e.yektanetAnalyticsObject = n, e[n] = e[n] || function () { e[n].q.push(arguments) }, e[n].q = e[n].q || []; var a = t.getElementsByTagName("head")[0], r = new Date, c = "https://cdn.yektanet.com/superscript/oCENP39w/native-LOCKET.ir-39526/yn_pub.js?v=" + r.getFullYear().toString() + "0" + r.getMonth() + "0" + r.getDate() + "0" + r.getHours(), s = t.createElement("link"); s.rel = "preload", s.as = "script", s.href = c, a.appendChild(s); var l = t.createElement("script"); l.async = !0, l.src = c, a.appendChild(l) }(window, document, "yektanet");
+    </script>
+
+    <!-- اسکریپت‌ها -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/lazysizes.min.js"></script>
+
+    @await RenderSectionAsync("MetaTags", false)
+    @await RenderSectionAsync("MetaLink", false)
+
+    <script>
+        function copyToClipboard() {
+            const textToCopy = document.getElementById('short-link').textContent;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('لینک کپی شد!');
+            }).catch(err => {
+                alert('کپی کردن لینک انجام نشد.');
+                console.error(err);
+            });
+        }
+    </script>
+</head>
+
+<body class="bg-light style-default style-rounded">
+
+    <div class="loader-mask">
+        <div class="loader">
+            <div></div>
+        </div>
+    </div>
+    <div class="content-overlay"></div>
+    <partial name="Heders/_SideNav" model="categories" />
+    <main class="main oh" id="main">
+
+        <partial name="Heders/_TopHeder" />
+        <partial name="Heders/_MineHeder" model="categories" />
+        @RenderBody()
+        <partial name="_Footer" />
+        <div id="back-to-top">
+            <a href="#top" aria-label="Go to top"><i class="ui-arrow-up"></i></a>
+        </div>
+    </main>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/easing.min.js"></script>
+    <script src="~/js/owl-carousel.min.js"></script>
+    <script src="~/js/flickity.pkgd.min.js"></script>
+    <script src="~/js/twitterFetcher_min.js"></script>
+    <script src="~/js/jquery.newsTicker.min.js"></script>
+    <script src="~/js/modernizr.min.js"></script>
+    <script src="~/js/scripts.js"></script>
+    <script src="~/js/custom.js"></script>
+
+    @await RenderSectionAsync("Scripts", false)
+</body>
+
+</html>

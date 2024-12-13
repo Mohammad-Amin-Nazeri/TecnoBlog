@@ -1,0 +1,210 @@
+﻿@page "{slug}"
+@using Blog.CoreLayer.Utilities
+@using Blog.CoreLayer.Utlilties
+@model Blog.web.Pages.PostModel
+
+@{
+    ViewData["Title"] = Model.Post.Title;
+    var siteUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+    var postUrl = $"{siteUrl}/post/{Model.Post.Slug}";
+    var shortDescription = Model.Post.SmallDescription;
+
+    var imageType = System.IO.Path.GetExtension(Model.Post.ImageName).Replace(".", "");
+    var imageUrl = Directories.GetPostImage(Model.Post.ImageName);
+}
+
+<link href="/css/post.css" rel="stylesheet" />
+
+
+
+@section MetaLink {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+}
+
+
+@section MetaTags {
+    <meta name="title" content="@Model.Post.Title">
+    <meta name="description" content="@shortDescription">
+    <meta name="keywords" content="@Model.Post.Keyword">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="@Model.Post.Title">
+    <meta property="og:description" content="@shortDescription">
+    <meta property="og:url" content="@postUrl">
+    <meta property="og:image" content="@imageUrl">
+    <meta property="og:image:type" content="image/@imageType">
+    <meta property="og:locale" content="fa_IR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@Model.Post.Title">
+    <meta name="twitter:description" content="@shortDescription">
+    <meta name="twitter:image" content="@imageUrl">
+
+    <link rel="canonical" href="@postUrl">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/png" href="/path-to-your-favicon.png">
+
+}
+
+<div class="container">
+    <ul class="breadcrumbs">
+        <li class="breadcrumbs__item">
+            <a asp-page="Index" class="breadcrumbs__url">خانه</a>
+        </li>
+        <li class="breadcrumbs__item">
+            <a asp-page="Search" asp-route-categorySlug="@Model.Post.category.Slug" class="breadcrumbs__url">@Model.Post.category.Title</a>
+        </li>
+        @if (Model.Post.SubCategory != null)
+        {
+            <li class="breadcrumbs__item">
+                <a asp-page="Search" asp-route-categorySlug="@Model.Post.SubCategory.Slug" class="breadcrumbs__url">@Model.Post.SubCategory.Title</a>
+            </li>
+        }
+        <li class="breadcrumbs__item breadcrumbs__item--current">
+            @Model.Post.Title
+        </li>
+    </ul>
+</div>
+
+<div class="main-container container" id="main-container">
+    <div class="row">
+        <div class="col-lg-8 blog__content mb-72">
+            <div class="content-box">
+                <article class="entry mb-0">
+                    <div class="single-post__entry-header entry__header">
+                        <h1 class="single-post__entry-title">@Model.Post.Title</h1>
+                    
+                        <div class="entry__meta-holder">
+                            <ul class="entry__meta">
+                                <li class="entry__meta-author">
+                                    <span>نویسنده:</span>
+                                    <a href="#">@Model.Post.UserName</a>
+                                </li>
+                                <li class="entry__meta-date">
+                                    @Model.Post.CreationDate.Date.ToPersianDate()
+                                </li>
+                            </ul>
+                            <ul class="entry__meta">
+                                <li class="entry__meta-views">
+                                    <i class="ui-eye"></i>
+                                    <span>@Model.Post.Visit</span>
+                                </li>
+                                <li class="entry__meta-comments">
+                                    <a href="#"><i class="ui-chat-empty"></i>@Model.Comments.Count</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="entry__img-holder">
+                        <img src="@imageUrl" alt="@Model.Post.Title" class="entry__img">
+                    </div>
+
+                    <div class="entry__article">
+                        <div id="pos-article-display-card-102604"></div>
+                        <div class="post-content">
+    @Html.Raw(Model.Post.Description)
+</div>
+
+                        <div id="pos-article-display-card-102604"></div>
+                    </div>
+
+                    <div id="pos-article-text-card-102412"></div>
+                    <div id="pos-article-display-102386"></div>
+                    <div id="pos-article-text-card-102412"></div>
+
+
+                    @if (Model.RelatedPost.Any())
+                    {
+                        <section class="section related-posts mt-40 mb-0">
+                            <div class="title-wrap title-wrap--line">
+                                <h3 class="section-title">مطالب مرتبط</h3>
+                            </div>
+                            <div id="owl-posts-3-items" class="owl-carousel owl-theme owl-carousel--arrows-outside">
+                                @foreach (var post in Model.RelatedPost)
+                                {
+                                    <article class="entry thumb thumb--size-1">
+                                        <div class="entry__img-holder thumb__img-holder" style="background-image: url('@Directories.GetPostImage(post.ImageName)');">
+                                            <div class="bottom-gradient"></div>
+                                            <div class="thumb-text-holder">
+                                                <h2 class="thumb-entry-title">
+                                                    <a asp-page="Post" asp-route-slug="@post.Slug">@post.Title</a>
+                                                </h2>
+                                            </div>
+                                            <a asp-page="Post" asp-route-slug="@post.Slug" class="thumb-url"></a>
+                                        </div>
+                                    </article>
+                                }
+                            </div>
+                        </section>
+                    }
+                </article>
+
+                <div class="entry-comments">
+                    <div class="title-wrap title-wrap--line">
+                        <h3 class="section-title">@Model.Comments.Count دیدگاه</h3>
+                    </div>
+
+                    <ul class="comment-list">
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <li class="comment">
+                                <div class="comment-body">
+                                    <div class="comment-avatar">
+                                        <img alt="" src="/img/default-avatar.png">
+                                    </div>
+                                    <div class="comment-text">
+                                        <h6 class="comment-author">@comment.UserFullName</h6>
+                                        <div class="comment-metadata">
+                                            <a href="#" class="comment-date">@comment.CreationDate.GetTimeAgo()</a>
+                                        </div>
+                                        <p>@comment.Text</p>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div id="respond" class="comment-respond">
+                        <div class="title-wrap">
+                            <h5 class="comment-respond__title section-title">دیدگاه شما</h5>
+                        </div>
+                        <form class="comment-form" method="post">
+                            <input type="hidden" asp-for="PostId" value="@Model.Post.PostId" />
+                            <p class="comment-form-comment">
+                                <label for="comment">دیدگاه</label>
+                                <textarea id="comment" asp-for="Text" rows="5"></textarea>
+                                <span asp-validation-for="Text"></span>
+                            </p>
+                            <p class="comment-form-submit">
+                                <input type="submit" class="btn btn-lg btn-color btn-button" value="ارسال دیدگاه">
+                            </p>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger">
+                        <a href="/auth/Login">
+                            برای ثبت نظر باید ثبت نام و یا وارد شوید
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-4 sidebar sidebar--right">
+            <div id="pos-article-display-102593"></div>
+            <aside id="Popular_posts">
+
+            </aside>
+
+            <div id="pos-article-display-102413"></div>
+        </div>
+
+
+
+    </div>
+
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>

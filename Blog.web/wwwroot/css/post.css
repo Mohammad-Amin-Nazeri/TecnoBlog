@@ -1,0 +1,55 @@
+﻿/* استایل پیش‌فرض تصاویر */
+.post-content img {
+    width: 100%; /* تصویر به اندازه عرض والد */
+    max-width: 600px; /* حداکثر عرض */
+    height: auto; /* ارتفاع متناسب با عرض */
+    border-radius: 10px; /* گوشه‌های گرد */
+    margin: 10px 0; /* فاصله از بالا و پایین */
+}
+
+
+/* استایل پیش‌فرض آیفریم */
+.post-content iframe {
+    width: 100%; /* عرض کامل */
+    height: auto; /* ارتفاع متناسب */
+    aspect-ratio: 16/9; /* نسبت ابعاد 16:9 */
+    border: 2px solid #ddd; /* حاشیه خاکستری */
+    margin: 10px 0;
+}
+
+/* استایل ریسپانسیو برای گوشی */
+@media (max-width: 768px) {
+    .post-content img {
+        width: 100%; /* کاهش عرض تصویر در موبایل */
+        max-width: 500px; /* حداکثر عرض در موبایل */
+        max-height: 200px; /* حداکثر ارتفاع در موبایل */
+        object-fit: contain; /* حفظ تناسب تصویر بدون برش */
+    }
+
+    .post-content iframe {
+        width: 100%; /* آیفریم تمام عرض */
+        height: 200px; /* ارتفاع ثابت روی گوشی */
+    }
+}
+
+/* استایل ریسپانسیو برای دسکتاپ */
+@media (min-width: 769px) {
+    .post-content img {
+        width: 100%; /* عرض کامل در دسکتاپ */
+        max-width: 700px; /* حداکثر عرض */
+        height: 300px; /* ارتفاع متناسب */
+    }
+
+    .post-content iframe {
+        width: 75%; /* عرض کمتر در دسکتاپ */
+        height: 400px; /* ارتفاع ثابت */
+        margin: auto;
+        display: block; /* وسط‌چین کردن آیفریم */
+    }
+}
+.post-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
